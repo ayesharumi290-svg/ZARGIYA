@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday ANU ❤️</title>
+
+<style>
+body{
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg,#ff9ad5,#ffc1e3);
+  color:#fff;
+  max-width:390px;
+  margin:auto;
+  overflow:hidden;
+}
+
+h1,h2{text-align:center;margin:6px 0;}
+#countdown{text-align:center;font-weight:bold;}
+
+.layout{
+  display:flex;
+  padding:12px;
+  gap:10px;
+}
+
+.left{
+  width:60%;
+  text-align:left;
+  order:1;
+}
+
+.right{
+  width:40%;
+  display:flex;
+  justify-content:center;
+  order:2;
+}
+
+/* 3D Cake */
+.cake{
+  position:relative;
+  width:120px;
+  transform: perspective(600px) rotateX(15deg);
+}
+
+.layer{
+  height:35px;
+  margin-top:6px;
+  background:linear-gradient(to right,#ff4fa3,#ff85c1);
+  border-radius:10px;
+  box-shadow:0 8px 0 rgba(0,0,0,0.2);
+}
+
+.candle{
+  position:absolute;
+  top:-30px;
+  left:50%;
+  transform:translateX(-50%);
+  width:8px;
+  height:30px;
+  background:white;
+}
+
+.flame{
+  position:absolute;
+  top:-14px;
+  left:-6px;
+  width:20px;
+  height:20px;
+  background:radial-gradient(circle,yellow,orange,red);
+  border-radius:50%;
+  animation:flicker .2s infinite;
+}
+
+.blown{opacity:0;transform:scale(0);transition:.5s;}
+
+@keyframes flicker{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+  100%{transform:scale(1)}
+}
+
+/* Typewriter */
+#messageBox{
+  font-size:18px;
+  white-space:pre-line;
+  border-right:2px solid #fff;
+  animation:blink .8s infinite;
+  min-height:140px;
+}
+
+@keyframes blink{50%{border-color:transparent}}
+
+button{
+  display:block;
+  margin:12px auto;
+  background:#ff1493;
+  color:white;
+  border:none;
+  padding:12px 20px;
+  border-radius:25px;
+  font-size:16px;
+}
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<h1>🎉 Happy Birthday ANU 🎉</h1>
+<h2>9 February ❤️</h2>
+<h2>ANU turns <b>22</b> today 🎂</h2>
+<div id="countdown"></div>
+
+<div class="layout">
+  <div class="left">
+    <div id="messageBox"></div>
+  </div>
+  <div class="right">
+    <div class="cake">
+      <div class="candle"><div class="flame"></div></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+    </div>
+  </div>
+</div>
+
+<button id="btn">Click to Open Love Letter 💌</button>
+
+<script>
+const btn=document.getElementById('btn');
+const box=document.getElementById('messageBox');
+const music=document.getElementById('bgMusic');
+const flame=document.querySelector('.flame');
+let step=0;
+
+function typeText(text){
+  box.innerHTML="";
+  let i=0;
+  const t=setInterval(()=>{
+    box.innerHTML+=text.charAt(i);
+    i++;
+    if(i>=text.length) clearInterval(t);
+  },40);
+}
+
+btn.onclick=()=>{
+  if(step===0){
+    music.play();
+    typeText("💌 My Love Letter:\nYou are my safest place and my sweetest thought.\nEvery smile of yours makes my world brighter.\nI’m so grateful that my heart chose you.");
+    btn.innerText="Next ❤️";
+  }
+  else if(step===1){
+    flame.classList.add('blown');
+    typeText("✨ Make a wish ✨");
+    btn.innerText="Next 💖";
+  }
+  else if(step===2){
+    typeText("😉 Flirty Message:\nEvery time you look at me, my heart forgets how to behave.\nYou don’t just steal glances… you steal my breath.");
+    btn.innerText="Next 😘";
+  }
+  else if(step===3){
+    typeText("❤️ I LOVE YOU ❤️");
+    btn.innerText="One More Click 💕";
+  }
+  else if(step===4){
+    typeText("😔 I'm sorry main apke birthday par apke sath nahi hun.\n\n— YOURS, MUBASHIRA ❤️");
+    btn.style.display="none";
+  }
+  step++;
+}
+
+// Countdown to 9 Feb
+let now=new Date();
+let target=new Date(now.getFullYear(),1,9);
+if(target<now) target=new Date(now.getFullYear()+1,1,9);
+
+setInterval(()=>{
+  let diff=target-new Date();
+  if(diff>0){
+    let d=Math.floor(diff/(1000*60*60*24));
+    let h=Math.floor(diff/(1000*60*60)%24);
+    let m=Math.floor(diff/(1000*60)%60);
+    document.getElementById('countdown').innerText=`Countdown: ${d}d ${h}h ${m}m`;
+  }
+},1000);
+</script>
+
+</body>
+</html>
